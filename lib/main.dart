@@ -3,10 +3,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vcard_maintained/vcard_maintained.dart';
 
 void main() {
@@ -119,11 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 .toString() + '.png';
         final file = await File('${directory!.path}/$filename').create();
         print(file.path);
-        // Save the QR code as a PNG image
-        //await file.writeAsBytes(pngBytes);
 
-        await GallerySaver.saveImage(file.path);
 
+        Share.shareXFiles([XFile(file.path)]);
+        //
         // Show a success message
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
